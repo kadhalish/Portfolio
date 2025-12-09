@@ -78,6 +78,7 @@
         }
         .nav-link:hover, .nav-link.active { color: var(--accent); }
         
+        /* Changed btn-resume from button to an anchor tag */
         .btn-resume {
             background-color: var(--accent);
             color: #000;
@@ -304,10 +305,11 @@
                 <a href="#projects" class="nav-link">Projects</a>
                 <a href="#skills" class="nav-link">Skills</a>
                 <a href="#contact" class="nav-link">Contact</a>
-                <button onclick="window.print()" class="btn-resume">
+                <!-- UPDATED: Changed the download link to use the actual filename and a generic path -->
+                <a href="/assets/Kadhalish.pdf" download="Kadhalish_S_Resume.pdf" class="btn-resume">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Resume
-                </button>
+                    Download Resume
+                </a>
             </div>
 
             <!-- Mobile Toggle -->
@@ -324,7 +326,11 @@
         <a href="#projects" onclick="toggleMenu()">Projects</a>
         <a href="#skills" onclick="toggleMenu()">Skills</a>
         <a href="#contact" onclick="toggleMenu()">Contact</a>
-        <button onclick="window.print()" class="btn-resume" style="width: 100%; justify-content: center;">Download Resume</button>
+        <!-- UPDATED: Changed the download link to use the actual filename and a generic path -->
+        <a href="/assets/Kadhalish.pdf" download="Kadhalish_S_Resume.pdf" class="btn-resume" style="width: 100%; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download Resume
+        </a>
     </div>
 
     <!-- Hero Section -->
@@ -406,10 +412,10 @@
                         <h3 class="job-title">Software Engineer</h3>
                         <span class="job-company">Montran Corporation</span>
                         <ul class="job-details">
-                            <li>Contributed to <strong>SWIFT ISO 20022 CBPR+ migration</strong>, ensuring seamless transition from MT to MX formats.</li>
-                            <li>Updated payment workflows for <strong>FIRCOSOFT</strong> AML/compliance screening and repaired message handling.</li>
-                            <li>Enhanced Core Banking System (CBS) posting requests.</li>
-                            <li>Configured <strong>IBM MQ</strong> queues for Mobile Banking and Treasury channels.</li>
+                            <li>Contributed to <strong>SWIFT ISO 20022 CBPR+ migration</strong>, ensuring seamless transition of payment processing from MT to MX message formats. </li>
+                            <li>Updated payment workflows to route transactions through <strong>FIRCOSOFT</strong> for AML and compliance screening, including handling of repaired messages.</li>
+                            <li>Enhanced Core Banking System (CBS) posting requests and optimized the transaction flow.</li>
+                            <li>Configured <strong>IBM MQ</strong> queues for Mobile Banking and Treasury channels to ensure reliable message delivery.</li>
                         </ul>
                     </div>
                 </div>
@@ -422,9 +428,9 @@
                         <h3 class="job-title">Software Engineer</h3>
                         <span class="job-company">Nulogic</span>
                         <ul class="job-details">
-                            <li>Designed enterprise Java apps for e-commerce using <strong>Oracle ATG</strong>.</li>
-                            <li>Developed RESTful APIs with robust error handling and serialization.</li>
-                            <li>Implemented auth using <strong>Spring Security, JWT, and OAuth2</strong>.</li>
+                            <li>Designed enterprise Java applications for e-commerce platforms using <strong>Oracle ATG</strong> (e-commerce framework).</li>
+                            <li>Developed RESTful APIs with robust error handling and serialization for core services.</li>
+                            <li>Implemented authentication and authorization using <strong>Spring Security, JWT, and OAuth2</strong>.</li>
                             <li>Managed CI/CD pipelines and handled production support tickets.</li>
                         </ul>
                     </div>
@@ -449,7 +455,7 @@
                             <h3>Global Payment System (GPS)</h3>
                             <div class="text-accent" style="font-size: 0.9rem;">FCIB, Mashreq Bank & QNB</div>
                         </div>
-                        <svg class="text-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        <svg class="text-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
                     </div>
                     <p class="text-muted">Developed MT to ISO 20022 (MX) message conversion for SWIFT and RTGS payments. Implemented critical routing logic to direct payments from multiple channels to RTGS and CBS.</p>
                     <div class="tags">
