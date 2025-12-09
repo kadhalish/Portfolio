@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadhalish S - Backend Developer Portfolio</title>
+    <style>
+        /* --- CSS VARIABLES (Theme) --- */
+        :root {
+            --bg-dark: #020617;     /* Slate 950 */
+            --bg-card: #0f172a;     /* Slate 900 */
+            --bg-card-hover: #1e293b;
+            --text-main: #e2e8f0;   /* Slate 200 */
+            --text-muted: #94a3b8;  /* Slate 400 */
+            --accent: #22d3ee;      /* Cyan 400 */
+            --accent-dim: rgba(34, 211, 238, 0.1);
+            --border: #1e293b;      /* Slate 800 */
+            --nav-bg: rgba(2, 6, 23, 0.9);
+        }
+
+        /* --- RESET & BASICS --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        button { cursor: pointer; border: none; font-family: inherit; }
+
+        /* --- UTILITIES --- */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .text-accent { color: var(--accent); }
+        .text-muted { color: var(--text-muted); }
+        .font-bold { font-weight: 700; }
+        .hidden { display: none; }
+        
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+        nav.scrolled {
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .logo { font-size: 1.25rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+        .logo-icon { 
+            background: var(--accent-dim); 
+            padding: 6px; 
+            border-radius: 6px; 
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            color: var(--accent);
+            display: flex;
+        }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-link { 
+            font-size: 0.9rem; 
+            font-weight: 500; 
+            color: var(--text-muted); 
+        }
+        .nav-link:hover, .nav-link.active { color: var(--accent); }
+        
+        .btn-resume {
+            background-color: var(--accent);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .btn-resume:hover { background-color: #67e8f9; }
+
+        /* Mobile Menu */
+        .mobile-toggle { display: none; color: var(--text-muted); background: none; }
+        .mobile-menu {
+            position: fixed; top: 70px; left: 0; width: 100%;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 2rem;
+            display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+            transform: translateY(-150%);
+            transition: transform 0.3s ease;
+            z-index: 999;
+        }
+        .mobile-menu.open { transform: translateY(0); }
+
+        /* --- SECTIONS --- */
+        section { padding: 5rem 0; }
+        .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 3rem; }
+        .section-title { font-size: 2rem; color: #fff; }
+
+        /* --- HERO --- */
+        #home { padding-top: 10rem; min-height: 90vh; display: flex; align-items: center; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+        .pulse { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 0 4px rgba(34,211,238,0.2); }
+        .hero-title {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, var(--accent), #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-desc { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin-bottom: 2rem; }
+        .hero-buttons { display: flex; gap: 1rem; margin-bottom: 2rem; }
+        .btn-primary {
+            background: #fff; color: #000; padding: 12px 24px; border-radius: 6px; font-weight: 600;
+        }
+        .btn-primary:hover { background: #e2e8f0; }
+        .btn-outline {
+            background: transparent; color: #fff; border: 1px solid var(--border); padding: 12px 24px; border-radius: 6px; font-weight: 600;
+        }
+        .btn-outline:hover { background: var(--bg-card-hover); }
+
+        /* --- CODE CARD (Visual) --- */
+        .code-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            width: 100%; max-width: 450px;
+        }
+        .window-controls { display: flex; gap: 6px; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .code-line { margin-bottom: 4px; padding-left: 1rem; color: var(--text-muted); }
+        .kwd { color: #c084fc; } /* purple */
+        .str { color: #4ade80; } /* green */
+        .cls { color: #fde047; } /* yellow */
+        .obj { color: var(--accent); }
+
+        /* --- EXPERIENCE TIMELINE --- */
+        .timeline { position: relative; border-left: 2px solid var(--border); margin-left: 1rem; padding-left: 2rem; }
+        .timeline-item { position: relative; margin-bottom: 3rem; }
+        .timeline-dot {
+            position: absolute; left: -2.6rem; top: 0;
+            width: 16px; height: 16px;
+            background: var(--bg-dark);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+        }
+        .job-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: 0.3s;
+        }
+        .job-card:hover { border-color: rgba(34, 211, 238, 0.3); }
+        .job-title { color: #fff; font-size: 1.25rem; font-weight: 700; }
+        .job-company { color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; display: block; }
+        .job-details li { margin-bottom: 0.5rem; color: var(--text-muted); padding-left: 1rem; position: relative; }
+        .job-details li::before { content: "•"; color: var(--accent); position: absolute; left: 0; }
+
+        /* --- PROJECTS & SKILLS GRID --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 12px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); border-color: rgba(34, 211, 238, 0.3); }
+        .card-head { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; }
+        .card h3 { color: #fff; font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
+        .tag { background: var(--border); color: var(--text-muted); font-size: 0.75rem; padding: 4px 10px; border-radius: 99px; }
+
+        /* --- CONTACT --- */
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 3rem; }
+        .contact-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            color: var(--text-muted);
+        }
+        .contact-item:hover { border-color: var(--accent); color: #fff; }
+
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .hero-title { font-size: 2.5rem; }
+            .flex-col-mobile { flex-direction: column; }
+            .timeline { border-left: none; padding-left: 0; margin-left: 0; }
+            .timeline-dot { display: none; }
+            #home { flex-direction: column; padding-top: 8rem; text-align: left; }
+            .code-card { display: none; } /* Hide code visual on mobile to save space */
+        }
+
+        /* --- PRINT STYLES (For PDF Download) --- */
+        @media print {
+            /* Reset Colors for Paper */
+            :root {
+                --bg-dark: #ffffff;
+                --bg-card: #ffffff;
+                --text-main: #000000;
+                --text-muted: #333333;
+                --border: #cccccc;
+                --accent: #000000; /* Use black/dark gray for accent text in print */
+            }
+            body { background-color: #fff; color: #000; }
+            
+            /* Hide Web Elements */
+            nav, .mobile-toggle, .mobile-menu, .hero-buttons, .code-card, .contact-item { display: none !important; }
+            
+            /* Clean up Layout */
+            .container { max-width: 100%; padding: 0; margin: 0; }
+            section { padding: 1rem 0; page-break-inside: avoid; }
+            
+            /* Hero Adjustments */
+            #home { padding-top: 0; min-height: auto; display: block; border-bottom: 2px solid #000; padding-bottom: 2rem; margin-bottom: 2rem; }
+            .hero-title { font-size: 2.5rem; color: #000; margin-bottom: 0.5rem; }
+            .hero-badge { display: none; }
+            .gradient-text { -webkit-text-fill-color: #000; }
+            
+            /* Section Headers */
+            .section-header { margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem; }
+            .section-title { color: #000; font-size: 1.5rem; }
+            .section-header svg { display: none; }
+
+            /* Experience Timeline cleanup */
+            .timeline { border-left: none; padding-left: 0; margin-left: 0; }
+            .timeline-dot { display: none; }
+            .timeline-item { margin-bottom: 1.5rem; }
+            .job-card { border: none; padding: 0; }
+            .job-title { color: #000; font-size: 1.2rem; }
+            .job-company { color: #333; font-weight: bold; }
+            
+            /* Card/Grid Cleanup */
+            .card { border: 1px solid #eee; padding: 1rem; box-shadow: none; break-inside: avoid; }
+            .card h3 { color: #000; }
+            .tag { border: 1px solid #ccc; background: #f0f0f0; color: #000; }
+            
+            /* Contact for Print */
+            #contact .contact-grid { display: none; }
+            #contact::after {
+                content: "Email: kadhalishsuresh001@gmail.com | Phone: +91 9965149009 | LinkedIn: /in/kadhalish-s | GitHub: /kadhalish";
+                display: block;
+                text-align: center;
+                font-size: 0.9rem;
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container flex justify-between items-center">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                </div>
+                <span>Kadhalish<span class="text-accent">.dev</span></span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="nav-links">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <button onclick="window.print()" class="btn-resume">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Resume
+                </button>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button class="mobile-toggle" onclick="toggleMenu()">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about" onclick="toggleMenu()">About</a>
+        <a href="#experience" onclick="toggleMenu()">Experience</a>
+        <a href="#projects" onclick="toggleMenu()">Projects</a>
+        <a href="#skills" onclick="toggleMenu()">Skills</a>
+        <a href="#contact" onclick="toggleMenu()">Contact</a>
+        <button onclick="window.print()" class="btn-resume" style="width: 100%; justify-content: center;">Download Resume</button>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home">
+        <div class="container flex items-center justify-between gap-4">
+            <div style="flex: 1;">
+                <div class="hero-badge">
+                    <span class="pulse"></span> Available for New Opportunities
+                </div>
+                <h1 class="hero-title">
+                    Backend Engineering <br>
+                    <span class="gradient-text">at Scale</span>
+                </h1>
+                <p class="hero-desc">
+                    I'm <strong>Kadhalish S</strong>, a Java Backend Developer with 3.8+ years of experience crafting high-performance systems for Banking, Payments (ISO 20022), and E-commerce.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn-primary">View Work</a>
+                    <a href="#contact" class="btn-outline">Contact Me</a>
+                </div>
+            </div>
+
+            <!-- Visual Code Block (Desktop Only) -->
+            <div class="code-card">
+                <div class="window-controls">
+                    <div class="dot" style="background:#ef4444"></div>
+                    <div class="dot" style="background:#eab308"></div>
+                    <div class="dot" style="background:#22c55e"></div>
+                </div>
+                <div>
+                    <div class="code-line"><span class="kwd">class</span> <span class="cls">BackendDev</span> {</div>
+                    <div class="code-line">  <span class="kwd">private</span> <span class="cls">String</span> name = <span class="str">"Kadhalish S"</span>;</div>
+                    <div class="code-line">  <span class="kwd">private</span> <span class="cls">String[]</span> stack = {</div>
+                    <div class="code-line">    <span class="str">"Java"</span>, <span class="str">"Spring Boot"</span>,</div>
+                    <div class="code-line">    <span class="str">"ISO 20022"</span>, <span class="str">"IBM MQ"</span></div>
+                    <div class="code-line">  };</div>
+                    <div class="code-line">  <span class="kwd">public</span> <span class="kwd">void</span> <span class="cls">buildSystem</span>() {</div>
+                    <div class="code-line">    <span class="obj">this</span>.optimizeTransactions();</div>
+                    <div class="code-line">    <span class="obj">this</span>.ensureSecurity();</div>
+                    <div class="code-line">  }</div>
+                    <div class="code-line">}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" style="background: rgba(15, 23, 42, 0.5);">
+        <div class="container">
+            <div class="section-header">
+                <svg class="text-accent" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                <h2 class="section-title">About Me</h2>
+            </div>
+            <div style="max-width: 800px; color: var(--text-muted); font-size: 1.1rem; line-height: 1.8;">
+                <p style="margin-bottom: 1rem;">
+                    I am a results-driven Software Engineer with a focus on building robust backend architectures. Currently, I work with <strong class="text-accent">Montran Corporation</strong>, contributing to mission-critical banking integrations like the SWIFT ISO 20022 CBPR+ migration.
+                </p>
+                <p>
+                    Previously, at <strong class="text-accent">Nulogic</strong>, I developed scalable modules for large e-commerce platforms using Oracle ATG. My expertise lies in optimizing transaction flows, ensuring compliance (AML/screening), and seamless third-party integrations.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-header">
+                <svg class="text-accent" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <h2 class="section-title">Experience</h2>
+            </div>
+
+            <div class="timeline">
+                <!-- Job 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="job-card">
+                        <span class="text-muted" style="font-size: 0.9rem;">2024 – Present | Chennai</span>
+                        <h3 class="job-title">Software Engineer</h3>
+                        <span class="job-company">Montran Corporation</span>
+                        <ul class="job-details">
+                            <li>Contributed to <strong>SWIFT ISO 20022 CBPR+ migration</strong>, ensuring seamless transition from MT to MX formats.</li>
+                            <li>Updated payment workflows for <strong>FIRCOSOFT</strong> AML/compliance screening and repaired message handling.</li>
+                            <li>Enhanced Core Banking System (CBS) posting requests.</li>
+                            <li>Configured <strong>IBM MQ</strong> queues for Mobile Banking and Treasury channels.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Job 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="job-card">
+                        <span class="text-muted" style="font-size: 0.9rem;">2022 – 2024 | Chennai</span>
+                        <h3 class="job-title">Software Engineer</h3>
+                        <span class="job-company">Nulogic</span>
+                        <ul class="job-details">
+                            <li>Designed enterprise Java apps for e-commerce using <strong>Oracle ATG</strong>.</li>
+                            <li>Developed RESTful APIs with robust error handling and serialization.</li>
+                            <li>Implemented auth using <strong>Spring Security, JWT, and OAuth2</strong>.</li>
+                            <li>Managed CI/CD pipelines and handled production support tickets.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" style="background: rgba(15, 23, 42, 0.5);">
+        <div class="container">
+            <div class="section-header">
+                <svg class="text-accent" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                <h2 class="section-title">Featured Projects</h2>
+            </div>
+            
+            <div class="grid">
+                <!-- Project 1 -->
+                <div class="card">
+                    <div class="card-head">
+                        <div>
+                            <h3>Global Payment System (GPS)</h3>
+                            <div class="text-accent" style="font-size: 0.9rem;">FCIB, Mashreq Bank & QNB</div>
+                        </div>
+                        <svg class="text-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </div>
+                    <p class="text-muted">Developed MT to ISO 20022 (MX) message conversion for SWIFT and RTGS payments. Implemented critical routing logic to direct payments from multiple channels to RTGS and CBS.</p>
+                    <div class="tags">
+                        <span class="tag">ISO 20022</span>
+                        <span class="tag">Java</span>
+                        <span class="tag">IBM MQ</span>
+                        <span class="tag">SWIFT</span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="card">
+                    <div class="card-head">
+                        <div>
+                            <h3>E-Commerce Platform</h3>
+                            <div class="text-accent" style="font-size: 0.9rem;">RoadRunnerSports (USA)</div>
+                        </div>
+                        <svg class="text-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    </div>
+                    <p class="text-muted">Integrated third-party systems including Widen and Bloomreach Search Engine. Delivered enhancements for key modules like PLP (Product Listing Page) and PDP.</p>
+                    <div class="tags">
+                        <span class="tag">Oracle ATG</span>
+                        <span class="tag">REST APIs</span>
+                        <span class="tag">Spring Security</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-header">
+                <svg class="text-accent" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line></svg>
+                <h2 class="section-title">Technical Arsenal</h2>
+            </div>
+            
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                <!-- Skill Card 1 -->
+                <div class="card">
+                    <h3 class="text-accent" style="font-size: 1.1rem; margin-bottom: 1rem;">Languages</h3>
+                    <ul class="job-details">
+                        <li>Java (Core & Advanced)</li>
+                        <li>SQL</li>
+                        <li>XML / JSON</li>
+                    </ul>
+                </div>
+                <!-- Skill Card 2 -->
+                <div class="card">
+                    <h3 class="text-accent" style="font-size: 1.1rem; margin-bottom: 1rem;">Frameworks</h3>
+                    <ul class="job-details">
+                        <li>Spring Boot & Security</li>
+                        <li>Microservices</li>
+                        <li>Oracle ATG 11.3+</li>
+                    </ul>
+                </div>
+                <!-- Skill Card 3 -->
+                <div class="card">
+                    <h3 class="text-accent" style="font-size: 1.1rem; margin-bottom: 1rem;">Tools & DevOps</h3>
+                    <ul class="job-details">
+                        <li>Git & Jenkins</li>
+                        <li>Docker</li>
+                        <li>Ant / CI/CD</li>
+                    </ul>
+                </div>
+                <!-- Skill Card 4 -->
+                <div class="card">
+                    <h3 class="text-accent" style="font-size: 1.1rem; margin-bottom: 1rem;">Messaging & DB</h3>
+                    <ul class="job-details">
+                        <li>IBM MQ / Kafka</li>
+                        <li>Oracle 11g</li>
+                        <li>RESTful APIs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" style="border-top: 1px solid var(--border); padding-bottom: 2rem;">
+        <div class="container">
+            <div style="display: flex; align-items: center; gap: 1rem; background: var(--bg-card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border);">
+                <div style="background: rgba(34, 211, 238, 0.1); padding: 12px; border-radius: 50%; color: var(--accent);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                </div>
+                <div>
+                    <h3 style="color: #fff; margin-bottom: 4px;">B.E. Electronics and Communication Engineering</h3>
+                    <p class="text-muted">Jansons Institute of Technology, Coimbatore</p>
+                    <p class="text-accent" style="font-size: 0.9rem;">CGPA: 8.301 • Graduated 2022</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container" style="text-align: center; max-width: 600px;">
+            <h2 class="section-title" style="margin-bottom: 1rem;">Let's Work Together</h2>
+            <p class="text-muted" style="margin-bottom: 3rem;">I'm currently open to opportunities in Backend Development, specializing in Banking and FinTech domains.</p>
+            
+            <div class="contact-grid">
+                <a href="mailto:kadhalishsuresh001@gmail.com" class="contact-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    Email Me
+                </a>
+                <a href="tel:9965149009" class="contact-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    +91 9965149009
+                </a>
+                <a href="https://www.linkedin.com/in/kadhalish-s-a438aa1a5/" target="_blank" class="contact-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    LinkedIn
+                </a>
+                <a href="https://github.com/kadhalish" target="_blank" class="contact-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    GitHub
+                </a>
+            </div>
+
+            <p style="font-size: 0.9rem; color: #475569;">© 2025 Kadhalish S. Built with Offline-Ready HTML/CSS.</p>
+        </div>
+    </section>
+
+    <!-- Simple Interactions Script -->
+    <script>
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('open');
+        }
+
+        // Navbar Scroll Effect and Active Link Highlighting
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            // Add background to nav when scrolled
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+
+            // Highlight active section
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
