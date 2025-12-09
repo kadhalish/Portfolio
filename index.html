@@ -305,7 +305,8 @@
                 <a href="#projects" class="nav-link">Projects</a>
                 <a href="#skills" class="nav-link">Skills</a>
                 <a href="#contact" class="nav-link">Contact</a>
-                <!-- UPDATED: Changed the download link to use the actual filename and a generic path -->
+                
+                <!-- Updated Link: Set href to /assets/Kadhalish.pdf and added the download attribute -->
                 <a href="/assets/Kadhalish.pdf" download="Kadhalish_S_Resume.pdf" class="btn-resume">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     Download Resume
@@ -326,7 +327,8 @@
         <a href="#projects" onclick="toggleMenu()">Projects</a>
         <a href="#skills" onclick="toggleMenu()">Skills</a>
         <a href="#contact" onclick="toggleMenu()">Contact</a>
-        <!-- UPDATED: Changed the download link to use the actual filename and a generic path -->
+        
+        <!-- Updated Mobile Link: Set href to /assets/Kadhalish.pdf and added the download attribute -->
         <a href="/assets/Kadhalish.pdf" download="Kadhalish_S_Resume.pdf" class="btn-resume" style="width: 100%; justify-content: center;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
             Download Resume
@@ -412,7 +414,7 @@
                         <h3 class="job-title">Software Engineer</h3>
                         <span class="job-company">Montran Corporation</span>
                         <ul class="job-details">
-                            <li>Contributed to <strong>SWIFT ISO 20022 CBPR+ migration</strong>, ensuring seamless transition of payment processing from MT to MX message formats. </li>
+                            <li>Contributed to <strong>SWIFT ISO 20022 CBPR+ migration</strong>, ensuring seamless transition of payment processing from MT to MX message formats.</li>
                             <li>Updated payment workflows to route transactions through <strong>FIRCOSOFT</strong> for AML and compliance screening, including handling of repaired messages.</li>
                             <li>Enhanced Core Banking System (CBS) posting requests and optimized the transaction flow.</li>
                             <li>Configured <strong>IBM MQ</strong> queues for Mobile Banking and Treasury channels to ensure reliable message delivery.</li>
@@ -475,7 +477,7 @@
                         </div>
                         <svg class="text-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                     </div>
-                    <p class="text-muted">Integrated third-party systems including Widen and Bloomreach Search Engine. Delivered enhancements for key modules like PLP (Product Listing Page) and PDP.</p>
+                    <p class="text-muted">Integrated third-party systems including Widen and Bloomreach Search Engine. Delivered enhancements for key modules like PLP (Product Listing Page) and PDP (Product Detail Page).</p>
                     <div class="tags">
                         <span class="tag">Oracle ATG</span>
                         <span class="tag">REST APIs</span>
@@ -508,8 +510,8 @@
                 <div class="card">
                     <h3 class="text-accent" style="font-size: 1.1rem; margin-bottom: 1rem;">Frameworks</h3>
                     <ul class="job-details">
-                        <li>Spring Boot & Security</li>
-                        <li>Microservices</li>
+                        <li>Spring Boot, Microservices</li>
+                        <li>Spring Security (JWT/OAuth2)</li>
                         <li>Oracle ATG 11.3+</li>
                     </ul>
                 </div>
@@ -518,8 +520,8 @@
                     <h3 class="text-accent" style="font-size: 1.1rem; margin-bottom: 1rem;">Tools & DevOps</h3>
                     <ul class="job-details">
                         <li>Git & Jenkins</li>
-                        <li>Docker</li>
-                        <li>Ant / CI/CD</li>
+                        <li>Docker, Ant</li>
+                        <li>CI/CD pipelines</li>
                     </ul>
                 </div>
                 <!-- Skill Card 4 -->
@@ -612,7 +614,8 @@
 
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
+                // Ensure the link matches the current section OR if it's the resume link, ignore it for active state.
+                if (link.getAttribute('href') && link.getAttribute('href').startsWith('#') && link.getAttribute('href').includes(current)) {
                     link.classList.add('active');
                 }
             });
